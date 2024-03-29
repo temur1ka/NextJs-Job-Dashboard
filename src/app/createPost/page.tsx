@@ -7,10 +7,13 @@ import {
   Home,
   LineChart,
   Menu,
+  MoonIcon,
   Package,
   Package2,
   Search,
   ShoppingCart,
+  Star,
+  SunIcon,
   Users,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -33,19 +36,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import axios from "axios"; // Import Axios
-import { redirect } from "next/dist/server/api-utils";
 import { Toaster, toast } from "sonner";
+import { useTheme } from "next-themes";
 
 function CreateProductPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState(null);
+  const { setTheme } = useTheme();
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
 
     try {
-      const response = await axios.post("http://localhost:3001/user/create/", {
+      const response = await axios.post("http://localhost:3001/user/create", {
         title,
         description,
       });
@@ -81,21 +85,21 @@ function CreateProductPage() {
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <Package className="h-4 w-4" />
-                Dashboard{" "}
+                Tasks{" "}
               </Link>
               <Link
                 href="/createPost"
                 className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
               >
                 <Home className="h-4 w-4" />
-                Add a Post
+                Add a Task
               </Link>
               <Link
                 href="#"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
-                <ShoppingCart className="h-4 w-4" />
-                Vip Results
+                <Star className="h-4 w-4" />
+                Important
                 <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   6
                 </Badge>
@@ -117,21 +121,28 @@ function CreateProductPage() {
               </Link>
             </nav>
           </div>
-          <div className="mt-auto p-4">
-            <Card>
-              <CardHeader className="p-2 pt-0 md:p-4">
-                <CardTitle>Upgrade to Vip</CardTitle>
-                <CardDescription>
-                  Unlcok all features and get notification on the job wich suits
-                  your CV
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
-                <Button size="sm" className="w-full">
-                  Upgrade
+          <div className="mt-auto p-4 text-center mb-14">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                  <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                  <span className="sr-only">Toggle theme</span>
                 </Button>
-              </CardContent>
-            </Card>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setTheme("light")}>
+                  Light
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                  Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>
+                  System
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>
@@ -162,32 +173,26 @@ function CreateProductPage() {
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
                 >
                   <ShoppingCart className="h-5 w-5" />
-                  Dashboard
+                  Tasks
                 </Link>
                 <Link
                   href="/createPost"
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                 >
                   <Home className="h-5 w-5" />
-                  Add a Post
+                  Add a Task
                 </Link>
                 <Link
                   href="#"
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                 >
-                  <ShoppingCart className="h-5 w-5" />
-                  Vip Results
+                  <Star className="h-5 w-5" />
+                  Important
                   <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                     6
                   </Badge>
                 </Link>
-                <Link
-                  href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Package className="h-5 w-5" />
-                  Products
-                </Link>
+
                 <Link
                   href="#"
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
@@ -203,21 +208,27 @@ function CreateProductPage() {
                   Settings
                 </Link>
               </nav>
-              <div className="mt-auto">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Upgrade to Vip</CardTitle>
-                    <CardDescription>
-                      Unlock all features and get unlimited access to our
-                      support team.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button size="sm" className="w-full">
-                      Upgrade
+              <div className="mt-auto p-4 text-center mb-14">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="icon">
+                      <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                      <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                      <span className="sr-only">Toggle theme</span>
                     </Button>
-                  </CardContent>
-                </Card>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => setTheme("light")}>
+                      Light
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setTheme("dark")}>
+                      Dark
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setTheme("system")}>
+                      System
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </SheetContent>
           </Sheet>
@@ -227,7 +238,7 @@ function CreateProductPage() {
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder="Search products..."
+                  placeholder="Search tasks..."
                   className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
                 />
               </div>
@@ -252,7 +263,7 @@ function CreateProductPage() {
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
           <div className="flex items-center">
-            <h1 className="text-lg font-semibold md:text-2xl">Job Dashboard</h1>
+            <h1 className="text-lg font-semibold md:text-2xl">Make a TODO</h1>
           </div>
           <div>
             <div>
@@ -271,13 +282,13 @@ function CreateProductPage() {
                   value={description}
                   onChange={(event) => setDescription(event.target.value)}
                 />
-                <Toaster></Toaster>
+                <Toaster />
                 <Button
                   className="mt-4"
                   type="submit"
-                  onClick={() => toast("my first")}
+                  onClick={() => toast.success("Created Successfully")}
                 >
-                  Create Product
+                  Create Task
                 </Button>
               </form>
             </div>
