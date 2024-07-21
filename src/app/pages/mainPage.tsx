@@ -12,9 +12,10 @@ import {
 import { Button } from "@/components/ui/button";
 import deleteHandler from "./api/delete-todo";
 import prisma from "@/lib/db";
+import FilledStar from "@/components/ui/filledStar";
 
 
-export async function Dashboard(id: any) {
+export async function Dashboard(id:any) {
   const data = await getLists();
 
   return (
@@ -39,7 +40,7 @@ export async function Dashboard(id: any) {
                 <CardHeader>
                   <div className="flex justify-between">
                     <CardTitle>{list.title}</CardTitle>
-                    {list.isImportant === true ? <Star className="cursor-pointer"/> : <StarIcon className="cursor-pointer"/>}
+                    {list.isImportant === true ? <FilledStar/> : <StarIcon className="cursor-pointer"/>}
                   </div>
                   <CardDescription>{list.description}</CardDescription>
                 </CardHeader>

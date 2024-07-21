@@ -6,6 +6,7 @@ import React from "react";
 const Nav = async () => {
   const counts = await prisma.todoList.count({ where: { isImportant: true } });
 
+
   return (
     <div className="flex h-16 items-center px-4">
       <button
@@ -25,7 +26,7 @@ const Nav = async () => {
             alt="Alicia Koch"
           />
         </span>
-        Alicia Koch
+        Temo Met
         <svg
           width="15"
           height="15"
@@ -44,7 +45,7 @@ const Nav = async () => {
       </button>
       <nav className="flex items-center space-x-4 lg:space-x-6 mx-6">
         <a
-          className="text-sm font-medium transition-colors hover:text-primary"
+          className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
           href="/"
         >
           Lists
