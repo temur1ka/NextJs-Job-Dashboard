@@ -1,9 +1,4 @@
-import Image from "next/image";
-
-import ProductPage from "./products/page";
-import HeaderComp from "./components/MiddleComp";
-import { Dashboard } from "./dropMenu/HeaderComp";
-
+import { Dashboard } from "./pages/mainPage";
 
 export default async function Home() {
   return (
