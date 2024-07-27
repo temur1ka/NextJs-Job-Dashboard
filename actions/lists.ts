@@ -1,6 +1,7 @@
 "use server"
 import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function getLists() {
   const data = await prisma.todoList.findMany();
@@ -38,8 +39,10 @@ export async function getImportantList() {
 export async function deleteList(id: string) {
   const data = await prisma.todoList.delete({
     where: {
-      id
-    }
+      id,
+    },
   });
-  return data
+ 
+  revalidatePath("/");
+  
 }

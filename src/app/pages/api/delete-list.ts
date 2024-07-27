@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function DELETE(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (req.method === 'DELETE') {
     const { id } = req.query;
 
@@ -25,3 +25,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 };
+

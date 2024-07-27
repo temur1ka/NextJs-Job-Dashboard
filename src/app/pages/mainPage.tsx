@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useState } from "react";
 import { deleteList, getLists } from "../../../actions/lists";
 import { Star, StarIcon } from "lucide-react";
 import {
@@ -10,13 +11,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import deleteHandler from "./api/delete-todo";
+import deleteHandler from "./api/delete-list";
 import prisma from "@/lib/db";
 import FilledStar from "@/components/ui/filledStar";
 
+export function Dashboard(id:any) {
+  const [lists, setLists] = useState<any[]>([]);
 
-export async function Dashboard(id:any) {
-  const data = await getLists();
+  const getPostsData = async () => {
+    const data = await getLists();
+    setLists(data);
+  };
+
+  React.useEffect(() => {
+    getPostsData();
+  }, []);
 
   return (
     <div className="grid min-h-screen  ">
@@ -26,9 +35,8 @@ export async function Dashboard(id:any) {
         </div>
 
         <div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {data?.map((list) => (
+            {lists.map((list) => (
               <Card
                 key={list.id}
                 className={`${
@@ -40,7 +48,11 @@ export async function Dashboard(id:any) {
                 <CardHeader>
                   <div className="flex justify-between">
                     <CardTitle>{list.title}</CardTitle>
-                    {list.isImportant === true ? <FilledStar/> : <StarIcon className="cursor-pointer"/>}
+                    {list.isImportant === true ? (
+                      <FilledStar />
+                    ) : (
+                      <StarIcon className="cursor-pointer" />
+                    )}
                   </div>
                   <CardDescription>{list.description}</CardDescription>
                 </CardHeader>
@@ -48,7 +60,7 @@ export async function Dashboard(id:any) {
                   {list.isImportant === true ? "Important" : "Not Important"}
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  <Button>Finish</Button>
+                  <Button onClick={() => deleteList(list.id)}>Finish</Button>
                 </CardFooter>
               </Card>
             ))}

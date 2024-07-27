@@ -26,7 +26,7 @@ const Nav = async () => {
             alt="Alicia Koch"
           />
         </span>
-        Temo Met
+        John Doe
         <svg
           width="15"
           height="15"
